@@ -1,38 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_srl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
-        android:id="@+id/main_sv"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <net.tsz.afinal.view.TitleBar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:center_tv="东北大学"
+            app:no_back_iv="true" />
 
-            <com.youth.banner.Banner
-                android:id="@+id/main_title_ban"
-                android:layout_width="match_parent"
-                android:layout_height="170dp" />
+        <ScrollView
+            android:id="@+id/main_sv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/main_tab"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@android:color/white" />
-
-            <net.tsz.afinal.view.TotalListView
-                android:id="@+id/main_ll"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/white" />
-        </LinearLayout>
-    </ScrollView>
+                android:orientation="vertical">
 
+                <com.youth.banner.Banner
+                    android:id="@+id/main_title_ban"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp" />
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/main_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@android:color/white" />
+
+                <net.tsz.afinal.view.TotalListView
+                    android:id="@+id/main_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/white" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

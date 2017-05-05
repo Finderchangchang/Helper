@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         app:center_tv="个人中心"
-        app:no_back_iv="true"
+        app:left_tv="退出"
         app:no_bottom_line="true"
         app:right_tv="编辑" />
 
@@ -160,22 +160,29 @@
                 android:layout_height="10dp"
                 android:background="@color/main_bg" />
 
-            <LinearLayout
-                android:id="@+id/exit_ll"
+            <TextView
+                android:id="@+id/order_manage_tv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="5dp"
                 android:paddingLeft="20dp"
-                android:paddingTop="5dp">
+                android:text="订单管理"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:text="退出登录"
-                    android:textSize="16sp" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/main_bg" />
+
+            <TextView
+                android:id="@+id/pj_manage_tv"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="1dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="评价管理"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

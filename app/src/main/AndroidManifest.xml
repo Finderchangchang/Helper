@@ -39,7 +39,9 @@
         <activity android:name=".ui.OrderDetailActivity" />
         <activity android:name=".ui.UserEditActivity" />
         <activity android:name=".ui.WantJDActivity" />
-        <activity android:name=".ui.UserDetailActivity"></activity>
+        <activity android:name=".ui.UserDetailActivity" />
+        <activity android:name=".ui.OrderManagerActivity" />
+        <activity android:name=".ui.AskManageActivity"></activity>
     </application>
 
 </manifest>

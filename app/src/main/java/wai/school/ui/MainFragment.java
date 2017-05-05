@@ -79,7 +79,6 @@ public class MainFragment extends Fragment {
     RelativeLayout title_rl;
     SwipeRefreshLayout main_srl;
     String title = "全部订单";
-    LinearLayout exit_ll;
     ScrollView main_sv;
 
     @Override
@@ -245,7 +244,6 @@ public class MainFragment extends Fragment {
                 return view;
             default:
                 view = inflater.inflate(R.layout.frag_user_detail, container, false);
-                exit_ll = (LinearLayout) view.findViewById(R.id.exit_ll);
                 title_rl = (RelativeLayout) view.findViewById(R.id.title_rl);
                 toolbar = (TitleBar) view.findViewById(R.id.toolbar);
                 userNameTv = (TextView) view.findViewById(R.id.user_name_tv);
@@ -255,6 +253,10 @@ public class MainFragment extends Fragment {
                 orderNumTv = (TextView) view.findViewById(R.id.order_num_tv);//得计算
                 remarkTv = (TextView) view.findViewById(R.id.remark_tv);
                 pl_lv = (TotalListView) view.findViewById(R.id.pl_lv);
+                order_manage_tv = (TextView) view.findViewById(R.id.order_manage_tv);
+                pj_manage_tv = (TextView) view.findViewById(R.id.pj_manage_tv);
+                order_manage_tv.setOnClickListener(view1 -> Utils.IntentPost(OrderManagerActivity.class));
+                pj_manage_tv.setOnClickListener(view1 -> Utils.IntentPost(AskManageActivity.class));
                 String user_id = Utils.getCache("user_id");
                 toolbar.setRightClick(() -> {
                     if (TextUtils.isEmpty(user_id)) {
@@ -305,7 +307,7 @@ public class MainFragment extends Fragment {
                         }
                     }
                 });
-                exit_ll.setOnClickListener(view1 -> {
+                toolbar.setLeftClick(() -> {
                     Utils.putCache("user_id", "");
                     Utils.putCache("user_name", "");
                     UserModel.logOut();
@@ -338,6 +340,8 @@ public class MainFragment extends Fragment {
         }
     }
 
+    TextView order_manage_tv;
+    TextView pj_manage_tv;
     List<OrderModel> orderModels;
     CommonAdapter<OrderModel> pj_adapter;
     UserModel model;
