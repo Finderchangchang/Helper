@@ -46,12 +46,20 @@ public class AskManageActivity extends BaseActivity {
     @Override
     public void initEvents() {
         orderModels = new ArrayList<>();
-        pj_adapter = new CommonAdapter<OrderModel>(MainActivity.admin, orderModels, R.layout.item_pj) {
+        pj_adapter = new CommonAdapter<OrderModel>(this, orderModels, R.layout.item_ask) {
             @Override
             public void convert(CommonViewHolder holder, OrderModel model, int position) {
-                holder.setGliImage(R.id.user_iv, model.getUser().getImg());
-                holder.setText(R.id.name_tv, model.getUser().getName());
-                holder.setText(R.id.content_tv, model.getPingjia());
+                holder.setGliImage(R.id.user_iv, model.getJd_user().getImg());
+                if (model.getJd_user().getName() == null) {
+                    holder.setText(R.id.name_tv, "未知");
+                } else {
+                    holder.setText(R.id.name_tv, model.getJd_user().getName());
+                }
+                if (model.getPingjia() == null) {
+                    holder.setText(R.id.content_tv, "未知");
+                } else {
+                    holder.setText(R.id.content_tv, model.getPingjia());
+                }
             }
         };
         mainLv.setAdapter(pj_adapter);

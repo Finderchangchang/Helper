@@ -3,7 +3,9 @@ package wai.school.ui;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,6 +53,8 @@ public class UserDetailActivity extends BaseActivity {
     TextView remarkTv;
     @Bind(R.id.pl_lv)
     TotalListView plLv;
+    @Bind(R.id.xy_ll)
+    LinearLayout xy_ll;
     UserModel model;
 
     @Override
@@ -91,16 +95,21 @@ public class UserDetailActivity extends BaseActivity {
                 break;
         }
         orderModels = new ArrayList<>();
-        pj_adapter = new CommonAdapter<OrderModel>(MainActivity.admin, orderModels, R.layout.item_pj) {
+        pj_adapter = new CommonAdapter<OrderModel>(this, orderModels, R.layout.item_pj) {
             @Override
             public void convert(CommonViewHolder holder, OrderModel model, int position) {
-                holder.setText(R.id.name_tv, model.getPingjia());
+                holder.setText(R.id.name_tv," "+ model.getPingjia());
             }
         };
         plLv.setAdapter(pj_adapter);
         BmobQuery<OrderModel> bmobQuery = new BmobQuery<>();
-        UserModel model = new UserModel();
-        model.setObjectId(Utils.getCache("user_id"));
+        if (model == null) {
+            model = new UserModel();
+            model.setObjectId(Utils.getCache("user_id"));
+            xy_ll.setVisibility(View.GONE);
+        } else {
+            xy_ll.setVisibility(View.VISIBLE);
+        }
         bmobQuery.addWhereEqualTo("jd_user", model);//当前账户
         bmobQuery.addWhereEqualTo("state", "3");//状态为用户确认订单
         bmobQuery.findObjects(new FindListener<OrderModel>() {

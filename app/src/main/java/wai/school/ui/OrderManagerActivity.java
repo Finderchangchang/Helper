@@ -61,11 +61,15 @@ public class OrderManagerActivity extends BaseActivity {
 
             }
         });
-        adapter = new CommonAdapter<OrderModel>(MainActivity.admin, list, R.layout.item_main) {
+        adapter = new CommonAdapter<OrderModel>(this, list, R.layout.item_main) {
             @Override
             public void convert(CommonViewHolder holder, OrderModel model, int position) {
                 holder.setGliImage(R.id.user_iv, model.getUser().getImg());
-                holder.setText(R.id.user_name_tv, model.getUser().getName());
+                if (model.getUser().getName() == null) {
+                    holder.setText(R.id.user_name_tv, "未知");
+                } else {
+                    holder.setText(R.id.user_name_tv, model.getUser().getName());
+                }
                 holder.setText(R.id.order_time_tv, model.getCreatedAt());
                 holder.setText(R.id.order_title_tv, model.getTitle());
                 holder.setText(R.id.price_tv, "￥" + model.getMoney());
@@ -95,6 +99,7 @@ public class OrderManagerActivity extends BaseActivity {
             }
         };
         orderLv.setAdapter(adapter);
+        refresh("我的发单");
     }
 
     CommonAdapter<OrderModel> adapter;
@@ -108,7 +113,6 @@ public class OrderManagerActivity extends BaseActivity {
         switch (val) {
             case "我的发单":
                 query.addWhereEqualTo("user", userModel);
-
                 break;
             default:
                 query.addWhereEqualTo("jd_state", "0");
