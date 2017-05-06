@@ -49,11 +49,11 @@ public class AskManageActivity extends BaseActivity {
         pj_adapter = new CommonAdapter<OrderModel>(this, orderModels, R.layout.item_ask) {
             @Override
             public void convert(CommonViewHolder holder, OrderModel model, int position) {
-                holder.setGliImage(R.id.user_iv, model.getJd_user().getImg());
-                if (model.getJd_user().getName() == null) {
+                holder.setGliImage(R.id.user_iv, model.getUser().getImg());
+                if (model.getUser().getName() == null) {
                     holder.setText(R.id.name_tv, "未知");
                 } else {
-                    holder.setText(R.id.name_tv, model.getJd_user().getName());
+                    holder.setText(R.id.name_tv, model.getUser().getName());
                 }
                 if (model.getPingjia() == null) {
                     holder.setText(R.id.content_tv, "未知");
@@ -66,7 +66,7 @@ public class AskManageActivity extends BaseActivity {
         BmobQuery<OrderModel> bmobQuery = new BmobQuery<>();
         UserModel model = new UserModel();
         model.setObjectId(Utils.getCache("user_id"));
-        bmobQuery.include("jd_user");
+        bmobQuery.include("user");//jd_user接单人是本人，显示user的信息
         bmobQuery.addWhereEqualTo("jd_user", model);//当前账户
         bmobQuery.addWhereEqualTo("state", "3");//状态为用户确认订单
         bmobQuery.findObjects(new FindListener<OrderModel>() {

@@ -115,7 +115,7 @@ public class OrderManagerActivity extends BaseActivity {
                 query.addWhereEqualTo("user", userModel);
                 break;
             default:
-                query.addWhereEqualTo("jd_state", "0");
+                query.addWhereEqualTo("jd_user", userModel);
                 break;
         }
         query.findObjects(new FindListener<OrderModel>() {
