@@ -71,7 +71,7 @@ public class UserEditActivity extends BaseActivity {
         userModel = (UserModel) getIntent().getSerializableExtra("user");
         BmobQuery<UserModel> query = new BmobQuery<>();
         query.addWhereEqualTo("objectId", Utils.getCache("user_id"));
-        imgLl.setOnClickListener(view -> {
+        imgLl.setOnClickListener(view -> {//选择头像操作
             PhotoPicker.builder()
                     .setPhotoCount(1)
                     .setShowCamera(true)
@@ -83,7 +83,7 @@ public class UserEditActivity extends BaseActivity {
             @Override
             public void done(List<UserModel> list, BmobException e) {
                 if (e == null && list.size() > 0) {
-                    UserModel model = list.get(0);
+                    UserModel model = list.get(0);//查询出当前用户的数据并在页面进行显示
                     nameEt.setText(model.getName());
                     Glide.with(UserEditActivity.this)
                             .load(model.getImg()).error(R.mipmap.user)
@@ -103,7 +103,7 @@ public class UserEditActivity extends BaseActivity {
             }
         });
         toolbar.setLeftClick(() -> finish());
-        toolbar.setRightClick(() -> {
+        toolbar.setRightClick(() -> {//执行保存操作
             String name = nameEt.getText().toString().trim();
             String school = schoolEt.getText().toString().trim();
             String address = addressEt.getText().toString().trim();
@@ -128,7 +128,7 @@ public class UserEditActivity extends BaseActivity {
                         break;
                 }
                 BmobUser user = BmobUser.getCurrentUser();
-                if (user == null) {
+                if (user == null) {//修改当前用户信息(先检测是否处于登录状态，登录了执行save，未登录在重新登录一下)
                     BmobUser.loginByAccount(Utils.getCache("user_tel"), Utils.getCache("user_pwd"), new LogInListener<Object>() {
                         @Override
                         public void done(Object o, BmobException e) {
@@ -146,6 +146,9 @@ public class UserEditActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 修改保存用户信息功能
+     */
     void save() {
         userModel.update(userModel.getObjectId(), new UpdateListener() {
             @Override
@@ -170,7 +173,7 @@ public class UserEditActivity extends BaseActivity {
                 ArrayList<String> photos =
                         data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
                 if (photos.size() > 0) {
-                    final String[] filePaths = new String[1];
+                    final String[] filePaths = new String[1];//选择或者拍的头像信息，并上传到bmob服务器上
                     filePaths[0] = photos.get(0);
                     imgIv.setImageBitmap(Utils.getBitmapByFile(photos.get(0)));
                     BmobFile.uploadBatch(filePaths, new UploadBatchListener() {

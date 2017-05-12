@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import wai.school.ui.MainFragment;
 
 /**
+ * tab切换的adapter
  * Created by Finder丶畅畅 on 2017/1/17 21:15
  * QQ群481606175
  */

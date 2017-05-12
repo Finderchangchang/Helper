@@ -23,7 +23,7 @@ import wai.school.model.OrderModel;
 import wai.school.model.UserModel;
 
 /**
- * 订单管理
+ * 订单管理列表
  */
 public class OrderManagerActivity extends BaseActivity {
     @Bind(R.id.toolbar)
@@ -44,7 +44,7 @@ public class OrderManagerActivity extends BaseActivity {
         toolbar.setLeftClick(() -> finish());
         list = new ArrayList<>();
         orderTab.addTab(orderTab.newTab().setText("我的发单"));
-        orderTab.addTab(orderTab.newTab().setText("我的接单"));
+        orderTab.addTab(orderTab.newTab().setText("我的接单"));//顶部tab切换，下面内容进行修改
         orderTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -99,16 +99,19 @@ public class OrderManagerActivity extends BaseActivity {
 
     CommonAdapter<OrderModel> adapter;
 
+    /**
+     * 根据状态不同对数据进行刷新操作
+     * @param val
+     */
     void refresh(String val) {
         BmobQuery<OrderModel> query = new BmobQuery<>();
         query.order("-createdAt");
-        query.include("user");
+        query.include("user");//根据当前用户查询出对应订单并根据创建时间进行倒序排列
         UserModel userModel = new UserModel();
         userModel.setObjectId(Utils.getCache("user_id"));
         switch (val) {
             case "我的发单":
                 query.addWhereEqualTo("user", userModel);
-
                 break;
             default:
                 query.addWhereEqualTo("jd_state", "0");

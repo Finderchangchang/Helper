@@ -20,7 +20,7 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.tab_pager)
     ViewPager tabPager;
     @Bind(R.id.bottom_tab)
-    TabLayout bottomTab;
+    TabLayout bottomTab;//底部切换菜单
     public static MainActivity admin;
 
     @Override
@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity {
     public void initViews() {
         mAdapter = new MainAdapter(getSupportFragmentManager());
         tabPager.setAdapter(mAdapter);
-        tabPager.setOffscreenPageLimit(3);
+        tabPager.setOffscreenPageLimit(3);//预加载出3个fragment页面
         bottomTab.setupWithViewPager(tabPager);
         admin = this;
     }

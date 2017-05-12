@@ -102,7 +102,7 @@ public class OrderDetailActivity extends BaseActivity {
         };
         askLv.setAdapter(adapter);
         order = (OrderModel) getIntent().getSerializableExtra("order_id");
-        askLv.setOnItemClickListener((adapterView, view, i, l) -> {
+        askLv.setOnItemClickListener((adapterView, view, i, l) -> {//订单列表点击item触发事件-->跳转到用户详情页面
             Utils.IntentPost(UserDetailActivity.class, intent -> intent.putExtra("user", askModels.get(i).getUser()));
         });
         refreshUI();
@@ -111,12 +111,15 @@ public class OrderDetailActivity extends BaseActivity {
 
     String user_id;
 
+    /**
+     * 刷新当前页面数据，并赋值
+     */
     void refreshUI() {
         now_user = order.getUser();
         user_id = Utils.getCache("user_id");
-        choicePersonBtn.setOnClickListener(view -> {
+        choicePersonBtn.setOnClickListener(view -> {//根据按钮文字不同执行不同的操作
             switch (choicePersonBtn.getText().toString()) {
-                case "想接此单":
+                case "想接此单"://先查询一下当前订单在想要接单列表中是否存在，如果存在进行提示
                     BmobQuery<WantModel> query = new BmobQuery<WantModel>();
                     UserModel userModel = new UserModel();
                     userModel.setObjectId(user_id);
@@ -127,7 +130,7 @@ public class OrderDetailActivity extends BaseActivity {
                         public void done(List<WantModel> list, BmobException e) {
                             if (e == null && list.size() > 0) {
                                 ToastShort("不能重复申请");
-                            } else {
+                            } else {//如果不存在提示是否想要接此单,点击确定提交订单，否则不执行操作
                                 AlertDialog.Builder builder = new AlertDialog.Builder(OrderDetailActivity.this);
                                 builder.setTitle("提示");
                                 builder.setMessage("确定要接此单吗？");
@@ -157,7 +160,7 @@ public class OrderDetailActivity extends BaseActivity {
                     break;
                 case "配送完成":
                     if (("1").equals(order.getState())) {
-                        order.setState("2");
+                        order.setState("2");//点击配送完成修改订单状态并刷新页面数据
                         order.update(new UpdateListener() {
                             @Override
                             public void done(BmobException e) {
@@ -172,9 +175,9 @@ public class OrderDetailActivity extends BaseActivity {
                     }
                     break;
                 case "评价送单人":
-                    if (("3").equals(order.getState())) {
+                    if (("3").equals(order.getState())) {//如果已经评价此单，无法再评价
                         ToastShort("您已评价此单");
-                    } else {
+                    } else {//未对订单进行评价，弄一个弹出框输入评价内容
                         EditText et = new EditText(this);
                         AlertDialog.Builder builder = new AlertDialog.Builder(OrderDetailActivity.this);
                         builder.setTitle("提示");
@@ -182,7 +185,7 @@ public class OrderDetailActivity extends BaseActivity {
                         builder.setView(et, 20, 20, 20, 20);
                         builder.setNegativeButton("确定", (dialogInterface, i) -> {
                             order.setPingjia(et.getText().toString().trim());
-                            order.setState("3");
+                            order.setState("3");//点击确定将评价内容保存在订单中
                             order.update(new UpdateListener() {
                                 @Override
                                 public void done(BmobException e) {
@@ -205,6 +208,7 @@ public class OrderDetailActivity extends BaseActivity {
                     break;
             }
         });
+        //发送消息操作->发送完成刷新页面数据并倒序排列
         sendAskBtn.setOnClickListener(view -> {
             AskModel askModel = new AskModel();
             askModel.setOrder(order);
@@ -225,8 +229,8 @@ public class OrderDetailActivity extends BaseActivity {
         Glide.with(this)
                 .load(order.getUser().getImg())
                 .error(R.mipmap.user)
-                .into(userIv);
-        switch (order.getSex()) {
+                .into(userIv);//加载用户头像
+        switch (order.getSex()) {//根据用户性别显示不同图标
             case "1":
                 sexIv.setImageResource(R.mipmap.nan);
                 break;
@@ -255,6 +259,10 @@ public class OrderDetailActivity extends BaseActivity {
 
     }
 
+    /**
+     * 根据不同状态控制控件显示隐藏
+     * @param state
+     */
     void refreshState(String state) {
         switch (state) {//订单状态
             case "0":

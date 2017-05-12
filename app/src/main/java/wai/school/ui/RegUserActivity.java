@@ -50,11 +50,11 @@ public class RegUserActivity extends BaseActivity {
                 ToastShort("邀请码不能为空");
             } else {
                 BmobQuery<UserModel> query = new BmobQuery<UserModel>();
-                query.addWhereEqualTo("yz_code", code);
+                query.addWhereEqualTo("yz_code", code);//验证码验证操作
                 query.findObjects(new FindListener<UserModel>() {
                     @Override
                     public void done(List<UserModel> list, BmobException e) {
-                        if (e == null && list.size() > 0) {
+                        if (e == null && list.size() > 0) {//验证码验证通过，注册用户信息
                             if (TextUtils.isEmpty(tel)) {
                                 ToastShort("手机号码不能为空");
                             } else if (!Utils.isMobileNo(tel)) {

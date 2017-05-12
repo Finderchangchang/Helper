@@ -40,15 +40,16 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initViews() {
+        //跳转到注册页面
         go_reg_tv.setOnClickListener(view -> startActivityForResult(new Intent(LoginActivity.this, RegUserActivity.class), 0));
-        toolbar.setLeftClick(() -> finish());
+        toolbar.setLeftClick(() -> finish());//关闭当前页面
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
-            case 77:
+            case 77://注册成功以后回调该方法，将用户名密码赋值到登录输入框中
                 String tel = data.getStringExtra("tel");
                 String pwd = data.getStringExtra("pwd");
                 telEt.setText(tel);
@@ -67,7 +68,7 @@ public class LoginActivity extends BaseActivity {
                 ToastShort("手机号码不能为空");
             } else if (TextUtils.isEmpty(pwd)) {
                 ToastShort("密码不能为空");
-            } else {
+            } else {//非空判断之后执行登录操作
                 BmobUser.loginByAccount(tel, pwd, new LogInListener<BmobUser>() {
                     @Override
                     public void done(BmobUser user, BmobException e) {

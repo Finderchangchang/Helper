@@ -62,6 +62,7 @@ public class UserDetailActivity extends BaseActivity {
     public void initViews() {
         toolbar.setLeftClick(() -> finish());
         model = (UserModel) getIntent().getSerializableExtra("user");
+        /**-----用户基本信息显示-------*/
         if (!TextUtils.isEmpty(model.getName())) {
             userNameTv.setText(model.getName());
         }
@@ -99,7 +100,7 @@ public class UserDetailActivity extends BaseActivity {
         };
         plLv.setAdapter(pj_adapter);
         BmobQuery<OrderModel> bmobQuery = new BmobQuery<>();
-        UserModel model = new UserModel();
+        UserModel model = new UserModel();//查询出当前登录账号的已经接的订单列表
         model.setObjectId(Utils.getCache("user_id"));
         bmobQuery.addWhereEqualTo("jd_user", model);//当前账户
         bmobQuery.addWhereEqualTo("state", "3");//状态为用户确认订单
@@ -108,7 +109,7 @@ public class UserDetailActivity extends BaseActivity {
             public void done(List<OrderModel> list, BmobException e) {
                 if (e == null) {
                     orderModels = list;
-                    pj_adapter.refresh(orderModels);
+                    pj_adapter.refresh(orderModels);//刷新订单列表，并显示数据
                     orderNumTv.setText(orderModels.size() + "件");
                 }
             }

@@ -58,7 +58,7 @@ public class WantJDActivity extends BaseActivity {
         mainLv.setAdapter(adapter);
         OrderModel model = new OrderModel();
         model.setObjectId(order_id);
-        BmobQuery<WantModel> query = new BmobQuery<>();
+        BmobQuery<WantModel> query = new BmobQuery<>();//根据订单进行查询出所有想要接单人的列表，并显示出来
         query.addWhereEqualTo("order", model);
         query.include("user");
         query.findObjects(new FindListener<WantModel>() {
@@ -70,6 +70,7 @@ public class WantJDActivity extends BaseActivity {
                 }
             }
         });
+        //点击指定用户，即选择此人为接单人。
         mainLv.setOnItemClickListener((adapterView, view, i, l) -> {
             OrderModel orderModel = new OrderModel();
             orderModel.setObjectId(order_id);
