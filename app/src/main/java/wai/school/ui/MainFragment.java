@@ -93,7 +93,11 @@ public class MainFragment extends Fragment {
                     @Override
                     public void convert(CommonViewHolder holder, OrderModel model, int position) {
                         holder.setGliImage(R.id.user_iv, model.getUser().getImg());
-                        holder.setText(R.id.user_name_tv, model.getUser().getName());
+                        if (model.getUser().getName() != null) {
+                            holder.setText(R.id.user_name_tv, model.getUser().getName());
+                        } else {
+                            holder.setText(R.id.user_name_tv, "未知");
+                        }
                         holder.setText(R.id.order_time_tv, model.getCreatedAt());
                         holder.setText(R.id.order_title_tv, model.getTitle());
                         holder.setText(R.id.price_tv, "￥" + model.getMoney());

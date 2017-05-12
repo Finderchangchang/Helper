@@ -46,19 +46,27 @@ public class AskManageActivity extends BaseActivity {
     @Override
     public void initEvents() {
         orderModels = new ArrayList<>();
-        pj_adapter = new CommonAdapter<OrderModel>(MainActivity.admin, orderModels, R.layout.item_ask) {
+        pj_adapter = new CommonAdapter<OrderModel>(MainActivity.admin, orderModels, R.layout.item_pj) {
             @Override
             public void convert(CommonViewHolder holder, OrderModel model, int position) {
                 holder.setGliImage(R.id.user_iv, model.getUser().getImg());
-                holder.setText(R.id.name_tv, model.getUser().getName());
-                holder.setText(R.id.content_tv, model.getPingjia());
+                if (model.getUser().getName() == null) {
+                    holder.setText(R.id.name_tv, "未知");
+                } else {
+                    holder.setText(R.id.name_tv, model.getUser().getName());
+                }
+                if (model.getPingjia() == null) {
+                    holder.setText(R.id.content_tv, "未知");
+                } else {
+                    holder.setText(R.id.content_tv, model.getPingjia());
+                }
             }
         };
         mainLv.setAdapter(pj_adapter);
         BmobQuery<OrderModel> bmobQuery = new BmobQuery<>();
         UserModel model = new UserModel();
         model.setObjectId(Utils.getCache("user_id"));
-        bmobQuery.include("jd_user");//根据当前用户，并且state=3的查询出所有订单信息，并显示在页面中
+        bmobQuery.include("jd_user");
         bmobQuery.addWhereEqualTo("jd_user", model);//当前账户
         bmobQuery.addWhereEqualTo("state", "3");//状态为用户确认订单
         bmobQuery.findObjects(new FindListener<OrderModel>() {
