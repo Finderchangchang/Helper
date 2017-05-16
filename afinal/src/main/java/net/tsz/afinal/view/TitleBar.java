@@ -132,6 +132,13 @@ public class TitleBar extends LinearLayout {
         center_tv.setText(name);
     }
 
+    public void setRight_tv(String name) {
+        if (!TextUtils.isEmpty(str_right_tv)) {
+            right_tv.setVisibility(VISIBLE);
+            right_tv.setText(name);
+        }
+    }
+
     /**
      * 设置右侧文字显示隐藏
      *

@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -325,6 +326,9 @@ public class MainFragment extends Fragment {
                     }
                 };
                 pl_lv.setAdapter(pj_adapter);
+                pl_lv.setOnItemClickListener((adapterView, view12, i, l) -> {
+                    Utils.IntentPost(OrderDetailActivity.class, intent -> intent.putExtra("order_id", list.get(i)));
+                });
                 BmobQuery<OrderModel> bmobQuery = new BmobQuery<>();
                 UserModel model = new UserModel();
                 model.setObjectId(Utils.getCache("user_id"));
@@ -353,7 +357,7 @@ public class MainFragment extends Fragment {
     void refresh() {
         BmobQuery<OrderModel> query = new BmobQuery<>();
         query.order("-createdAt");
-        query.include("user");
+        query.include("user,jd_user");
         switch (title) {
             case "全部订单":
                 query.findObjects(new FindListener<OrderModel>() {

@@ -2,6 +2,7 @@ package wai.school.ui;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -84,6 +85,12 @@ public class OrderDetailActivity extends BaseActivity {
     EditText askEt;
     @Bind(R.id.send_ask_btn)
     Button sendAskBtn;
+    @Bind(R.id.name_tv)
+    TextView name_tv;
+    @Bind(R.id.call_btn)
+    Button call_btn;
+    @Bind(R.id.jd_ll)
+    LinearLayout jd_ll;
 
     @Override
     public int setLayout() {
@@ -102,6 +109,32 @@ public class OrderDetailActivity extends BaseActivity {
         };
         askLv.setAdapter(adapter);
         order = (OrderModel) getIntent().getSerializableExtra("order_id");
+        user_id = Utils.getCache("user_id");
+        if (user_id.equals(order.getUser().getObjectId())) {
+            toolbar.setRight_tv("删除");
+            toolbar.setRightClick(() -> {
+                order.delete(order.getObjectId(), new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null) {
+                            ToastShort("删除成功");
+                            finish();
+                        }
+                    }
+                });
+            });
+            if (order.getJd_user() != null) {
+                jd_ll.setVisibility(View.VISIBLE);
+                name_tv.setText(order.getJd_user().getName());
+                call_btn.setOnClickListener(view -> {
+                    Uri uri = Uri.parse("tel:" + order.getJd_user().getUsername());
+                    Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+                    startActivity(intent);
+                });
+            } else {
+                jd_ll.setVisibility(View.GONE);
+            }
+        }
         askLv.setOnItemClickListener((adapterView, view, i, l) -> {//订单列表点击item触发事件-->跳转到用户详情页面
             Utils.IntentPost(UserDetailActivity.class, intent -> intent.putExtra("user", askModels.get(i).getUser()));
         });
@@ -261,6 +294,7 @@ public class OrderDetailActivity extends BaseActivity {
 
     /**
      * 根据不同状态控制控件显示隐藏
+     *
      * @param state
      */
     void refreshState(String state) {
