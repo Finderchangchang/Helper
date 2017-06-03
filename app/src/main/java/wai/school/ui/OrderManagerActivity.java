@@ -2,6 +2,8 @@ package wai.school.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import net.tsz.afinal.view.TitleBar;
@@ -60,6 +62,9 @@ public class OrderManagerActivity extends BaseActivity {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
+        });
+        orderLv.setOnItemClickListener((adapterView, view, i, l) -> {
+            Utils.IntentPost(OrderDetailActivity.class, intent -> intent.putExtra("order_id", list.get(i)));
         });
         adapter = new CommonAdapter<OrderModel>(this, list, R.layout.item_main) {
             @Override

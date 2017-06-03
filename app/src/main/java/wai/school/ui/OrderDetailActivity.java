@@ -189,9 +189,7 @@ public class OrderDetailActivity extends BaseActivity {
                     });
 
                     break;
-                case "等待送达":
-                    break;
-                case "配送完成":
+                case "已送达":
                     if (("1").equals(order.getState())) {
                         order.setState("2");//点击配送完成修改订单状态并刷新页面数据
                         order.update(new UpdateListener() {
@@ -206,6 +204,9 @@ public class OrderDetailActivity extends BaseActivity {
                     } else {
                         ToastShort("您已配送完成");
                     }
+                    break;
+                case "配送完成":
+
                     break;
                 case "评价送单人":
                     if (("3").equals(order.getState())) {//如果已经评价此单，无法再评价
@@ -298,6 +299,7 @@ public class OrderDetailActivity extends BaseActivity {
      * @param state
      */
     void refreshState(String state) {
+        choicePersonBtn.setVisibility(View.VISIBLE);
         switch (state) {//订单状态
             case "0":
                 state1Tv.setVisibility(View.VISIBLE);
@@ -314,9 +316,10 @@ public class OrderDetailActivity extends BaseActivity {
                 state2Tv.setVisibility(View.VISIBLE);
                 state3Tv.setVisibility(View.GONE);
                 if (user_id.equals(order.getUser().getObjectId())) {
-                    choicePersonBtn.setText("等待送达");
+                    choicePersonBtn.setText("已送达");
                 } else if (user_id.equals(order.getJd_user().getObjectId())) {
-                    choicePersonBtn.setText("配送完成");
+                    //choicePersonBtn.setText("配送完成");
+                    choicePersonBtn.setVisibility(View.GONE);
                 } else {
                     choicePersonBtn.setText("其他人已接单");
                 }
