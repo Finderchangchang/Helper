@@ -46,7 +46,7 @@ public class AskManageActivity extends BaseActivity {
     @Override
     public void initEvents() {
         orderModels = new ArrayList<>();
-        pj_adapter = new CommonAdapter<OrderModel>(MainActivity.admin, orderModels, R.layout.item_pj) {
+        pj_adapter = new CommonAdapter<OrderModel>(MainActivity.admin, orderModels, R.layout.item_ask) {
             @Override
             public void convert(CommonViewHolder holder, OrderModel model, int position) {
                 holder.setGliImage(R.id.user_iv, model.getUser().getImg());

@@ -133,7 +133,7 @@ public class MainFragment extends Fragment {
                 main_tab.addTab(main_tab.newTab().setText("全部订单"));
                 main_tab.addTab(main_tab.newTab().setText("未接订单"));
                 banner = (Banner) view.findViewById(R.id.main_title_ban);
-                images = new ArrayList<>();
+                List<String> images = new ArrayList<>();
                 banner.setImageLoader(new GlideImageLoader());
                 images.add("https://img6.bdstatic.com/img/image/smallpic/2.jpg");
                 images.add("https://img6.bdstatic.com/img/image/smallpic/3.jpg");
